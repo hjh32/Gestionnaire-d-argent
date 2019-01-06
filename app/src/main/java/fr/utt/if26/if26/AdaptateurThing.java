@@ -31,9 +31,9 @@ public class AdaptateurThing extends ArrayAdapter<thing> {
         TextView des = v.findViewById(R.id.thing_description);
         TextView prix = v.findViewById(R.id.thing_prix);
         cat.setText(l.get(position).getCat());
-        date.setText(l.get(position).getDate());
+        date.setText(l.get(position).getDay() + "/" + l.get(position).getMonth());
         des.setText(l.get(position).getDescription());
-        prix.setText(l.get(position).getPrix());
+        prix.setText(String.valueOf(l.get(position).getPrix()));
         return v;
     }
 }

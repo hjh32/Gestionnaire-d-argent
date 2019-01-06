@@ -1,15 +1,69 @@
 package fr.utt.if26.if26;
 import java.io.Serializable;
 public class thing implements Serializable {
-    private String date;
+    private int id;
+    private int year;
+    private int month;
+    private int day;
     private String description;
-    private String prix;
+    private double prix;
     private String cat;
 
-    public thing(String cat,String date, String description, String prix) {
+    public thing(int id, int year, int month, int day, String cat, String description, double prix) {
         this.cat = cat;
-        this.date = date;
+        this.id = id;
+        this.year = year;
+        this.month = month;
+        this.day = day;
         this.description = description;
+        this.prix = prix;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public void setDay(int day) {
+        this.day = day;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrix() {
+        return prix;
+    }
+
+    public void setPrix(double prix) {
         this.prix = prix;
     }
 
@@ -19,39 +73,6 @@ public class thing implements Serializable {
 
     public void setCat(String cat) {
         this.cat = cat;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPrix(String prix) {
-        this.prix = prix;
-    }
-
-    public String getPrix() {
-        return prix;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public String toString() {
-        return "thing{" +
-                "cat=" + cat + '\'' +
-                ", date='" + date + '\'' +
-                ", description='" + description + '\'' +
-                ", prix='" + prix + '\'' +
-                '}';
     }
 
 }

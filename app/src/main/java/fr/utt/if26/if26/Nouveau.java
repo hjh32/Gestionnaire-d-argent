@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Nouveau extends AppCompatActivity {
+    private String monthStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,12 +17,7 @@ public class Nouveau extends AppCompatActivity {
         setContentView(R.layout.activity_nouveau);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String s = bundle.getString("depenses");
-        TextView cat = (TextView)findViewById(R.id.nouveau_combien);
-        cat.setText(s);
-
-
-
+        monthStr = bundle.getString("month");
 
         Button button1=(Button) findViewById(R.id.bt1);
         button1.setOnClickListener(listener1);
@@ -43,12 +39,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Aliment");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -57,12 +51,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Transport");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -71,12 +63,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Habitation");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -84,12 +74,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Divertissement");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -97,12 +85,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Habillement");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -110,12 +96,10 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, detail.class);
             intent.putExtra("cat", "Autre");
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -123,11 +107,9 @@ public class Nouveau extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView tv=(TextView) findViewById(R.id.nouveau_combien);
-            String string1 = tv.getText().toString();
             Intent intent = new Intent();
             intent.setClass(Nouveau.this, Depense.class);
-            intent.putExtra("depense", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };

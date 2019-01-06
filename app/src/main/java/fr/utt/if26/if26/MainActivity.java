@@ -6,70 +6,98 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
+    private String monthStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Button button1=(Button) findViewById(R.id.main_bt1);
-        button1.setOnClickListener(listener1);
-        Button button2=(Button) findViewById(R.id.main_bt2);
-        button2.setOnClickListener(listener2);
-        Button button3=(Button) findViewById(R.id.main_bt3);
-        button3.setOnClickListener(listener3);
+        if (getIntent().getExtras() != null) {
+            monthStr = getIntent().getExtras().getString("month");
+        }
+        if(monthStr.equals("")) {
+            Date date = Calendar.getInstance().getTime();
+            DateFormat dateFormat = new SimpleDateFormat("MM/yyyy");
+            monthStr = dateFormat.format(date);
+        }
+        EditText monthTxt = findViewById(R.id.main_month);
+        monthTxt.setText(monthStr);
+        int year = Integer.valueOf(monthStr.split("/")[1]);
+        int month = Integer.valueOf(monthStr.split("/")[0]);
+        thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+        double revenue = bd.getRevenue(year, month);
+        TextView revenueTv = findViewById(R.id.main_revenue);
+        revenueTv.setText(String.valueOf(revenue));
+        ImageView ivrev = findViewById(R.id.main_ivrevenue);
+        ivrev.setOnClickListener(listener2);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        String s1 = bundle.getString("mois");
-        String s2 = bundle.getString("revenue");
-        String s3 = bundle.getString("depenses");
-        if(s1 != null){
-            TextView editText1=(TextView) findViewById(R.id.main_mois);
-            editText1.setText(s1);
-        }
-        if(s2 != null){
-            TextView editText2=(TextView) findViewById(R.id.main_revenue);
-            editText2.setText(s2);
-        }
-        if(s3 != null){
-            TextView editText3=(TextView) findViewById(R.id.main_depenses);
-            editText3.setText(s3);
-        }
-        TextView editText2=(TextView) findViewById(R.id.main_revenue);
-        TextView editText3=(TextView) findViewById(R.id.main_depenses);
-        int i1 = Integer.parseInt(editText2.getText().toString());
-        int i2 = Integer.parseInt(editText3.getText().toString());
-        int i3 = i1 - i2;
-        TextView editText4=(TextView) findViewById(R.id.main_reste);
-        editText4.setText(String.valueOf(i3));
+        ImageView ivdep = findViewById(R.id.main_ivdepenses);
+        ivdep.setOnClickListener(listener3);
 
+        double depenses = bd.calcuteDepenses(year, month);
+        depenses = Math.floor(depenses * 100) / 100;
+        TextView depenseTv = findViewById(R.id.main_depenses);
+        depenseTv.setText(String.valueOf(depenses));
+
+        double reste = revenue - depenses;
+        reste = Math.floor(reste * 100) / 100;
+        TextView resteTv = findViewById(R.id.main_reste);
+        resteTv.setText(String.valueOf(reste));
+
+        Button ok = findViewById(R.id.main_ok);
+        ok.setOnClickListener(listener1);
     }
     private View.OnClickListener listener1 = new View.OnClickListener()
     {
         public void onClick(View v)
         {
-            TextView editText1=(TextView) findViewById(R.id.main_mois);
-            String st4 = editText1.getText().toString();
-            Intent intent = new Intent();
-            intent.setClass(MainActivity.this, Mois.class);
-            intent.putExtra("mois", st4);
-            startActivity(intent);
+            EditText monthTxt = findViewById(R.id.main_month);
+            monthStr = monthTxt.getText().toString();
+            int year = Integer.valueOf(monthStr.split("/")[1]);
+            int month = Integer.valueOf(monthStr.split("/")[0]);
+            thingBD bd = thingBD.getInstance(MainActivity.this, thingBD.DATABASE_NAME, null, 1);
+            double revenue = bd.getRevenue(year, month);
+            TextView revenueTv = findViewById(R.id.main_revenue);
+            revenueTv.setText(String.valueOf(revenue));
+            ImageView ivrev = findViewById(R.id.main_ivrevenue);
+            ivrev.setOnClickListener(listener2);
+
+            ImageView ivdep = findViewById(R.id.main_ivdepenses);
+            ivdep.setOnClickListener(listener3);
+
+            double depenses = bd.calcuteDepenses(year, month);
+            depenses = Math.floor(depenses * 100) / 100;
+            TextView depenseTv = findViewById(R.id.main_depenses);
+            depenseTv.setText(String.valueOf(depenses));
+
+            double reste = revenue - depenses;
+            reste = Math.floor(reste * 100) / 100;
+            TextView resteTv = findViewById(R.id.main_reste);
+            resteTv.setText(String.valueOf(reste));
         }
     };
     private View.OnClickListener listener2 = new View.OnClickListener()
     {
         public void onClick(View v)
         {
-            TextView editText2=(TextView) findViewById(R.id.main_revenue);
-            String st5 = editText2.getText().toString();
+            EditText monthTxt = findViewById(R.id.main_month);
+            String monthStr = monthTxt.getText().toString();
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, Revenue.class);
-            intent.putExtra("revenue", st5);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
@@ -77,11 +105,11 @@ public class MainActivity extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            TextView editText3=(TextView) findViewById(R.id.main_depenses);
-            String st6 = editText3.getText().toString();
+            EditText monthTxt = findViewById(R.id.main_month);
+            String monthStr = monthTxt.getText().toString();
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, Depense.class);
-            intent.putExtra("depenses", st6);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };

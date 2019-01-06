@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Revenue extends AppCompatActivity {
+    private  thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+    private String monthStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,10 +18,14 @@ public class Revenue extends AppCompatActivity {
         setContentView(R.layout.activity_revenue);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String s = bundle.getString("revenue");
-        TextView cat = (TextView)findViewById(R.id.revenue1);
-        cat.setText(s);
-        Button button=(Button) findViewById(R.id.button_modifier1);
+        monthStr = bundle.getString("month");
+        int year = Integer.valueOf(monthStr.split("/")[1]);
+        int month = Integer.valueOf(monthStr.split("/")[0]);
+        TextView revenue_month = findViewById(R.id.revenue_month);
+        revenue_month.setText("Revenue du " + monthStr);
+        EditText revenueTxt = findViewById(R.id.revenue1);
+        revenueTxt.setText(String.valueOf(bd.getRevenue(year, month)));
+        Button button = (Button) findViewById(R.id.button_modifier1);
         button.setOnClickListener(listener1);
     }
 
@@ -27,11 +33,20 @@ public class Revenue extends AppCompatActivity {
     {
         public void onClick(View v)
         {
-            EditText editText1=(EditText) findViewById(R.id.revenue1);
-            String string1 = editText1.getText().toString();
+            int year = Integer.valueOf(monthStr.split("/")[1]);
+            int month = Integer.valueOf(monthStr.split("/")[0]);
+            double revenue = bd.getRevenue(year, month);
+            EditText revenueTxt = findViewById(R.id.revenue1);
+            double newRev = Double.parseDouble(revenueTxt.getText().toString());
+            if(revenue - 0.00001 < 0 && revenue + 0.00001 > 0) {
+                thing t = new thing(0, year, month, 0, "revenue", "", newRev);
+                bd.addThing(t);
+            } else {
+                bd.updateRevenue(year, month, newRev);
+            }
             Intent intent = new Intent();
             intent.setClass(Revenue.this, MainActivity.class);
-            intent.putExtra("revenue", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };

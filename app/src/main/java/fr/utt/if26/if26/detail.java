@@ -13,18 +13,20 @@ import java.util.List;
 
 public class detail extends AppCompatActivity {
     private  thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+    private String monthStr = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        String s = bundle.getString("cat");
-        String s2 = bundle.getString("depense");
+        String categorie = bundle.getString("cat");
+        monthStr = bundle.getString("month");
         TextView cat = (TextView)findViewById(R.id.detail_cat);
-        cat.setText(s);
-        TextView cat2 = (TextView)findViewById(R.id.allmoney);
-        cat2.setText(s2);
+        cat.setText(categorie);
+        TextView monthTv = findViewById(R.id.detail_month);
+        monthTv.setText("/" + monthStr);
 
         Button button1=(Button) findViewById(R.id.button_ajouter);
         button1.setOnClickListener(listener1);
@@ -44,32 +46,26 @@ public class detail extends AppCompatActivity {
             String prix1 = prix.getText().toString();
             TextView cat = (TextView)findViewById(R.id.detail_cat);
             String cat1 = cat.getText().toString();
-            TextView catall = (TextView)findViewById(R.id.allmoney);
-            String string5 = catall.getText().toString();
-            int i3=Integer.parseInt(string5);
-            int i4=Integer.parseInt(prix1);
-            int i5 = i3 + i4;
-            String s8 = String.valueOf(i5);
-            catall.setText(s8);
+            int year = Integer.valueOf(monthStr.split("/")[1]);
+            int month = Integer.valueOf(monthStr.split("/")[0]);
 
-            thing t = new thing(cat1, time1, description1, prix1);
+            thing t = new thing(0, year, month, Integer.parseInt(time1), cat1, description1, Double.parseDouble(prix1));
             bd.addThing(t);
 
             Intent intent = new Intent();
             intent.setClass(detail.this, Depense.class);
-            intent.putExtra("depenses", s8);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
+
     private View.OnClickListener listener2 = new View.OnClickListener()
     {
         public void onClick(View v)
         {
-            TextView cat2 = (TextView)findViewById(R.id.allmoney);
-            String string1 = cat2.getText().toString();
             Intent intent = new Intent();
             intent.setClass(detail.this, Depense.class);
-            intent.putExtra("depenses", string1);
+            intent.putExtra("month", monthStr);
             startActivity(intent);
         }
     };
