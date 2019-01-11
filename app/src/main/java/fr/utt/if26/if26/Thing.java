@@ -1,6 +1,6 @@
 package fr.utt.if26.if26;
 import java.io.Serializable;
-public class thing implements Serializable {
+public class Thing implements Serializable {
     private int id;
     private int year;
     private int month;
@@ -9,7 +9,7 @@ public class thing implements Serializable {
     private double prix;
     private String cat;
 
-    public thing(int id, int year, int month, int day, String cat, String description, double prix) {
+    public Thing(int id, int year, int month, int day, String cat, String description, double prix) {
         this.cat = cat;
         this.id = id;
         this.year = year;

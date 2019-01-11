@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class thingBD extends SQLiteOpenHelper {
+public class ThingBD extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "things.db"; // nom du fichier pour la base
     private static final String TABLE_THINGS = "things"; // nom de la table
@@ -19,18 +19,18 @@ public class thingBD extends SQLiteOpenHelper {
     private static final String ATTRIBUT_DAY = "day";
     private static final String ATTRIBUT_DESCRIPTION = "description";
     private static final String ATTRIBUT_PRIX = "prix";
-    private static thingBD instance;
+    private static ThingBD instance;
     private static SQLiteDatabase db;
 
-    public static thingBD getInstance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public static ThingBD getInstance(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         if(instance == null) {
-            instance = new thingBD(context, name, factory, version);
+            instance = new ThingBD(context, name, factory, version);
             db = instance.getWritableDatabase();
         }
         return instance;
     }
 
-    private thingBD(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private ThingBD(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -54,7 +54,7 @@ public class thingBD extends SQLiteOpenHelper {
 
     }
 
-    public void addThing(thing t) {
+    public void addThing(Thing t) {
         ContentValues values = new ContentValues();
         values.put(ATTRIBUT_CATEGORIE, t.getCat());
         values.put(ATTRIBUT_YEAR, t.getYear());
@@ -66,57 +66,31 @@ public class thingBD extends SQLiteOpenHelper {
     }
 
 
-    public void delThing(thing t) {
-
-    }
-
-
-    public void updateThing(thing t) {
-
-    }
-
-
-    public thing getThing(String key) {
-        return null;
-    }
-
-
-    public int countThing() {
-        return 0;
-    }
-
     public void delThing(int ID) {
         db.delete(TABLE_THINGS, "ID=" + ID, null);
     }
 
-
-    public void updateThing(String ID) {
-        //db.update(TABLE_THINGS, values,  "ID = ?", new String[] { "The Da Vinci Code" });
-    }
-
-
-    public thing getThings(String ID) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public Thing getThings(String ID) {
         int id = Integer.parseInt(ID);
         String query = "SELECT " + ATTRIBUT_ID + ", " + ATTRIBUT_YEAR + ", " + ATTRIBUT_MONTH + ", " + ATTRIBUT_DAY + ", " + ATTRIBUT_CATEGORIE + ", " + ATTRIBUT_DESCRIPTION + ", " + ATTRIBUT_PRIX +
                 " FROM " + TABLE_THINGS + " WHERE id=" + id;
         Cursor cursor = db.rawQuery(query, null);
-        thing t = null;
+        Thing t = null;
         while(cursor.moveToNext()) {
-            t = new thing(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getDouble(6));
+            t = new Thing(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getDouble(6));
         }
         return t;
     }
 
 
 
-    public ArrayList<thing>  getAllThings(int year, int month) {
+    public ArrayList<Thing>  getAllThings(int year, int month) {
         String query = "SELECT " + ATTRIBUT_ID + ", " + ATTRIBUT_YEAR + ", " + ATTRIBUT_MONTH + ", " + ATTRIBUT_DAY + ", " + ATTRIBUT_CATEGORIE + ", " + ATTRIBUT_DESCRIPTION + ", " + ATTRIBUT_PRIX +
                 " FROM " + TABLE_THINGS + " WHERE " + ATTRIBUT_CATEGORIE + "<>'revenue' AND year=" + year + " AND month=" + month + " ORDER BY day DESC";
         Cursor cursor = db.rawQuery(query, null);
-        ArrayList<thing> things = new ArrayList<>();
+        ArrayList<Thing> things = new ArrayList<>();
         while(cursor.moveToNext()) {
-            thing t = new thing(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getDouble(6));
+            Thing t = new Thing(cursor.getInt(0), cursor.getInt(1), cursor.getInt(2), cursor.getInt(3), cursor.getString(4), cursor.getString(5), cursor.getDouble(6));
             things.add(t);
         }
         return things;
@@ -140,9 +114,9 @@ public class thingBD extends SQLiteOpenHelper {
     }
 
     public double calcuteDepenses(int year, int month) {
-        List<thing> things = getAllThings(year, month);
+        List<Thing> things = getAllThings(year, month);
         double depenses = 0;
-        for (thing t:
+        for (Thing t:
              things) {
             depenses = depenses + t.getPrix();
         }

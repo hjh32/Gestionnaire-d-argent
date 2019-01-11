@@ -1,23 +1,19 @@
 package fr.utt.if26.if26;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Depense extends AppCompatActivity {
-    private  thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+    private ThingBD bd = ThingBD.getInstance(this, ThingBD.DATABASE_NAME, null, 1);
     private String monthStr = "";
-    private List<thing> things = new ArrayList<>();
+    private List<Thing> things = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +66,7 @@ public class Depense extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Depense.this, MainActivity.class);
+            intent.setClass(Depense.this, HomepageActivity.class);
             intent.putExtra("month", monthStr);
             startActivity(intent);
         }

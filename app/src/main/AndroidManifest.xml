@@ -19,8 +19,8 @@
         <activity android:name=".Revenue" />
         <activity android:name=".Depense" />
         <activity android:name=".Nouveau" />
-        <activity android:name=".detail" />
-        <activity android:name=".Mois"></activity>
+        <activity android:name=".Detail" />
+        <activity android:name=".HomepageActivity"></activity>
     </application>
 
 </manifest>

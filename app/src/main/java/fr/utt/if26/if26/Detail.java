@@ -6,13 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
-public class detail extends AppCompatActivity {
-    private  thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+public class Detail extends AppCompatActivity {
+    private ThingBD bd = ThingBD.getInstance(this, ThingBD.DATABASE_NAME, null, 1);
     private String monthStr = "";
 
     @Override
@@ -49,11 +46,11 @@ public class detail extends AppCompatActivity {
             int year = Integer.valueOf(monthStr.split("/")[1]);
             int month = Integer.valueOf(monthStr.split("/")[0]);
 
-            thing t = new thing(0, year, month, Integer.parseInt(time1), cat1, description1, Double.parseDouble(prix1));
+            Thing t = new Thing(0, year, month, Integer.parseInt(time1), cat1, description1, Double.parseDouble(prix1));
             bd.addThing(t);
 
             Intent intent = new Intent();
-            intent.setClass(detail.this, Depense.class);
+            intent.setClass(Detail.this, Depense.class);
             intent.putExtra("month", monthStr);
             startActivity(intent);
         }
@@ -64,7 +61,7 @@ public class detail extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(detail.this, Depense.class);
+            intent.setClass(Detail.this, Depense.class);
             intent.putExtra("month", monthStr);
             startActivity(intent);
         }

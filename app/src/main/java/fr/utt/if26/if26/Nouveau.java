@@ -1,12 +1,10 @@
 package fr.utt.if26.if26;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 public class Nouveau extends AppCompatActivity {
     private String monthStr = "";
@@ -40,7 +38,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Aliment");
             intent.putExtra("month", monthStr);
             startActivity(intent);
@@ -52,7 +50,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Transport");
             intent.putExtra("month", monthStr);
             startActivity(intent);
@@ -64,7 +62,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Habitation");
             intent.putExtra("month", monthStr);
             startActivity(intent);
@@ -75,7 +73,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Divertissement");
             intent.putExtra("month", monthStr);
             startActivity(intent);
@@ -86,7 +84,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Habillement");
             intent.putExtra("month", monthStr);
             startActivity(intent);
@@ -97,7 +95,7 @@ public class Nouveau extends AppCompatActivity {
         public void onClick(View v)
         {
             Intent intent = new Intent();
-            intent.setClass(Nouveau.this, detail.class);
+            intent.setClass(Nouveau.this, Detail.class);
             intent.putExtra("cat", "Autre");
             intent.putExtra("month", monthStr);
             startActivity(intent);

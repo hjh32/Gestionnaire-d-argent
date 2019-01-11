@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class AdaptateurThing extends ArrayAdapter<thing> {
+public class AdaptateurThing extends ArrayAdapter<Thing> {
 
-    List<thing> l;
+    List<Thing> l;
     Context c;
     int r;
 
-    public AdaptateurThing(Context context, int resource, List<thing> objects) {
+    public AdaptateurThing(Context context, int resource, List<Thing> objects) {
         super(context, resource, objects);
         this.l = objects;
         this.c = context;

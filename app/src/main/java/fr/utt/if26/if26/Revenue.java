@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class Revenue extends AppCompatActivity {
-    private  thingBD bd = thingBD.getInstance(this, thingBD.DATABASE_NAME, null, 1);
+    private ThingBD bd = ThingBD.getInstance(this, ThingBD.DATABASE_NAME, null, 1);
     private String monthStr = "";
 
     @Override
@@ -39,13 +39,13 @@ public class Revenue extends AppCompatActivity {
             EditText revenueTxt = findViewById(R.id.revenue1);
             double newRev = Double.parseDouble(revenueTxt.getText().toString());
             if(revenue - 0.00001 < 0 && revenue + 0.00001 > 0) {
-                thing t = new thing(0, year, month, 0, "revenue", "", newRev);
+                Thing t = new Thing(0, year, month, 0, "revenue", "", newRev);
                 bd.addThing(t);
             } else {
                 bd.updateRevenue(year, month, newRev);
             }
             Intent intent = new Intent();
-            intent.setClass(Revenue.this, MainActivity.class);
+            intent.setClass(Revenue.this, HomepageActivity.class);
             intent.putExtra("month", monthStr);
             startActivity(intent);
         }
