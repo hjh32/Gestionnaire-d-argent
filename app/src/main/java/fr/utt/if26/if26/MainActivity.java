@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -26,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this, HomepageActivity.class);
                     startActivity(intent);
+                } else {
+                    TextView alert = findViewById(R.id.main_alert);
+                    alert.setText("Veuillez saisir votre code de connection");
                 }
             }
         });
@@ -57,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent();
                         intent.setClass(MainActivity.this, HomepageActivity.class);
                         startActivity(intent);
+                    } else {
+                        TextView alert = findViewById(R.id.main_alert);
+                        alert.setText("Code de connection incorrect");
                     }
                 }
             }
